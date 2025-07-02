@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Header Fragment -->
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - Car Market'">Car Market</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom styles -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+
+<header th:fragment="header(title, taskId)" class="pb-3 mb-4 border-bottom">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="fs-4 m-0" th:text="${title}">Title</h1>
+        <h1 class="fs-4 m-0" th:text="${taskId}">Title</h1>
+        <a th:href="@{/users/logout}" class="btn btn-sm btn-outline-secondary">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </div>
+</header>
+<!-- Reusable select fragment -->
+<div th:fragment="select-field(name, label, items, selectedId, required)" class="col-md-4 mb-3">
+    <label th:for="${name}" class="form-label" th:text="${label + (required ? '*' : '')}"></label>
+    <select class="form-select" th:id="${name}" th:name="${name}" th:required="${required}">
+        <option value="" th:if="${required}" selected disabled th:text="'Select ' + ${label.toLowerCase()}"></option>
+        <option th:each="item : ${items}"
+                th:value="${item.id}"
+                th:text="${item.name}"
+                th:selected="${selectedId != null} ? ${selectedId == item.id} : false"></option>
+    </select>
+    <div class="invalid-feedback" th:text="'Please select a ' + ${label.toLowerCase()}"></div>
+</div>
+
+<div th:fragment="footer">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/fragments.js}" defer></script>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div th:fragment="delete-modal" class="modal fade" id="deletePostModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this post?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deletePostForm" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
