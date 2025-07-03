@@ -3,31 +3,35 @@
 
 <head th:replace="~{fragments :: head('Home')}"></head>
 
-<body class="window">
-<div class="content-card">
-    <h1 class="mb-3">Accidents</h1>
-    <p class="text-muted mb-4">This is a Spring Boot application designed for reporting and managing traffic accident cases. It facilitates communication between citizens and traffic authorities through a structured workflow.</p>
+<body>
+    <div th:replace="~{fragments :: header('home', ${user})}"></div>
+    <div class="window">
+        <div class="content-card">
+            <h1 class="mb-3">Accidents</h1>
+            <p class="text-muted mb-4">
+                This is a Spring Boot application designed for reporting and managing traffic accident cases. It facilitates communication between citizens and traffic authorities through a structured workflow.
+            </p>
 
-    <div class="tech-badges">
-        <span class="tech-badge">Java 21</span>
-        <span class="tech-badge">Spring Boot</span>
-        <span class="tech-badge">Spring MVC</span>
-        <span class="tech-badge">Hibernate</span>
-        <span class="tech-badge">Liquibase</span>
-        <span class="tech-badge">PostgreSQL</span>
-        <span class="tech-badge">Lombok</span>
-        <span class="tech-badge">MapStruct</span>
-        <span class="tech-badge">Maven</span>
-        <span class="tech-badge">Thymeleaf</span>
-        <span class="tech-badge">Bootstrap</span>
+            <div class="tech-badges">
+                <span class="tech-badge">Java 21</span>
+                <span class="tech-badge">Spring Boot</span>
+                <span class="tech-badge">Spring MVC</span>
+                <span class="tech-badge">Hibernate</span>
+                <span class="tech-badge">Liquibase</span>
+                <span class="tech-badge">PostgreSQL</span>
+                <span class="tech-badge">Lombok</span>
+                <span class="tech-badge">MapStruct</span>
+                <span class="tech-badge">Maven</span>
+                <span class="tech-badge">Thymeleaf</span>
+                <span class="tech-badge">Bootstrap</span>
+            </div>
+
+            <a href="/posts" class="btn btn-primary">
+                <i class="bi bi-arrow-right-circle me-1"></i> Explore
+            </a>
+        </div>
     </div>
-
-    <a href="/posts" class="btn btn-primary">
-        <i class="bi bi-arrow-right-circle me-1"></i> Explore
-    </a>
-</div>
-
-<div th:replace="~{fragments :: footer}"></div>
+    <div th:replace="~{fragments :: footer}"></div>
 </body>
 
 </html>
