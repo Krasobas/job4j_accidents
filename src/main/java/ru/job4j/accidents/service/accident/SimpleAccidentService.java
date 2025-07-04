@@ -24,7 +24,9 @@ public class SimpleAccidentService implements AccidentService {
     @Override
     public Optional<AccidentDto> save(AccidentCreateDto accident) {
         Optional<AccidentType> type = typeRepository.findById(accident.getTypeId());
-        if (type.isEmpty()) return Optional.empty();
+        if (type.isEmpty()) {
+            return Optional.empty();
+        }
         Accident entity = mapper.getEntity(accident, type.get());
         entity = repository.save(entity);
         return Optional.ofNullable(mapper.getDto(entity));
