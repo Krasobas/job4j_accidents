@@ -56,6 +56,11 @@ public class InMemoryAccidentRepository implements AccidentRepository {
                 })
                 .toList();
     }
+
+    @Override
+    public boolean update(Accident accident) {
+        return Objects.nonNull(store.replace(accident.getId(), accident));
+    }
 }
 
 

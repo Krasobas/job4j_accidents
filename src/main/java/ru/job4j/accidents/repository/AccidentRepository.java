@@ -21,4 +21,6 @@ public interface AccidentRepository {
     Collection<Accident> findByAddress(String address);
 
     Collection<Accident> findByTextPhrase(String phrase);
+
+    boolean update(Accident accident);
 }

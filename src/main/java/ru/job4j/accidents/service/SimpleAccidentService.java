@@ -70,4 +70,9 @@ public class SimpleAccidentService implements AccidentService {
                 .map(mapper::getDto)
                 .toList();
     }
+
+    @Override
+    public boolean update(AccidentDto accident) {
+        return repository.update(mapper.getEntity(accident));
+    }
 }

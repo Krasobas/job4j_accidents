@@ -22,4 +22,6 @@ public interface AccidentService {
     List<AccidentDto> findByAddress(String address);
 
     List<AccidentDto> findByTextPhrase(String phrase);
+
+    boolean update(AccidentDto accident);
 }

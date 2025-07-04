@@ -6,7 +6,13 @@
 <div class="container mt-5">
     <a href="/api/accidents" class="btn btn-secondary mb-4">← Back to List</a>
 
-    <div class="card">
+    <div class="card position-relative">
+        <a th:href="@{/api/accidents/{id}/edit(id=${accident.id})}"
+           class="position-absolute top-0 end-0 m-2 btn btn-sm btn-outline-primary"
+           title="Edit">
+            <i class="fas fa-pencil-alt"></i>
+        </a>
+
         <div class="card-header">
             <h2 th:text="${accident.name}">Accident Name</h2>
         </div>

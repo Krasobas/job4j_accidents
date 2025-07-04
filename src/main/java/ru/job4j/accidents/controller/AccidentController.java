@@ -38,10 +38,30 @@ public class AccidentController {
     }
 
     @GetMapping("/create")
-    public String getCreatePage(Model model) {
-        model.addAttribute("user", "John Smith")
-            .addAttribute("accidentCreateDto", new AccidentCreateDto());
+    public String getCreateForm(Model model) {
+        model.addAttribute("user", "John Smith");
         return "accidents/create";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String getEditForm(Model model, @PathVariable(name = "id") Long id) {
+        model.addAttribute("user", "John Smith");
+        Optional<AccidentDto> found = service.findById(id);
+        if (found.isEmpty()) {
+            model.addAttribute("error", "Accident not found");
+            return "redirect:/error/404";
+        }
+        model.addAttribute("accident", found.get());
+        return "accidents/edit";
+    }
+
+    @PutMapping("/{id}/edit")
+    public String updateAccident(@ModelAttribute AccidentDto accident, Model model, @PathVariable(name = "id") Long id) {
+        if (!service.update(accident)) {
+            model.addAttribute("error", "Accident not found");
+            return "redirect:/error/404";
+        }
+        return String.format("redirect:/api/accidents/%d", accident.getId());
     }
 
     @PostMapping
