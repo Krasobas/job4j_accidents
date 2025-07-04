@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.job4j.accidents.dto.AccidentCreateDto;
-import ru.job4j.accidents.dto.AccidentDto;
-import ru.job4j.accidents.service.AccidentService;
+import ru.job4j.accidents.dto.accident.AccidentCreateDto;
+import ru.job4j.accidents.dto.accident.AccidentDto;
+import ru.job4j.accidents.dto.accident.AccidentEditDto;
+import ru.job4j.accidents.service.accident.AccidentService;
+import ru.job4j.accidents.service.type.AccidentTypeService;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -17,6 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AccidentController {
     private final AccidentService service;
+    private final AccidentTypeService typeService;
 
     @GetMapping
     public String getAllAccidents(@RequestParam(value = "name", required = false) String name, Model model) {
@@ -40,24 +43,26 @@ public class AccidentController {
 
     @GetMapping("/create")
     public String getCreateForm(Model model) {
-        model.addAttribute("user", "John Smith");
+        model.addAttribute("user", "John Smith")
+                .addAttribute("types", typeService.findAll());
         return "accidents/create";
     }
 
     @GetMapping("/{id}/edit")
     public String getEditForm(Model model, @PathVariable(name = "id") Long id) {
         model.addAttribute("user", "John Smith");
-        Optional<AccidentDto> found = service.findById(id);
+        Optional<AccidentEditDto> found = service.findByIdOnEdit(id);
         if (found.isEmpty()) {
             model.addAttribute("error", "Accident not found");
             return "redirect:/error/404";
         }
-        model.addAttribute("accident", found.get());
+        model.addAttribute("accident", found.get())
+                .addAttribute("types", typeService.findAll());
         return "accidents/edit";
     }
 
     @PutMapping("/{id}/edit")
-    public String updateAccident(@ModelAttribute AccidentDto accident, Model model, @PathVariable(name = "id") Long id) {
+    public String updateAccident(@ModelAttribute AccidentEditDto accident, Model model, @PathVariable(name = "id") Long id) {
         if (!service.update(accident)) {
             model.addAttribute("error", "Accident not found");
             return "redirect:/error/404";
@@ -66,8 +71,12 @@ public class AccidentController {
     }
 
     @PostMapping
-    public String createAccident(@ModelAttribute AccidentCreateDto accident) {
-        AccidentDto created = service.save(accident);
-        return String.format("redirect:/api/accidents/%d", created.getId());
+    public String createAccident(@ModelAttribute AccidentCreateDto accident, Model model) {
+        Optional<AccidentDto> created = service.save(accident);
+        if (created.isEmpty()) {
+            model.addAttribute("error", "Cannot create accident.");
+            return "redirect:/error/400";
+        }
+        return String.format("redirect:/api/accidents/%d", created.get().getId());
     }
 }

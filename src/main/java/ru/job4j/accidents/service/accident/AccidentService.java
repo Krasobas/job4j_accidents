@@ -1,15 +1,18 @@
-package ru.job4j.accidents.service;
+package ru.job4j.accidents.service.accident;
 
-import ru.job4j.accidents.dto.AccidentCreateDto;
-import ru.job4j.accidents.dto.AccidentDto;
+import ru.job4j.accidents.dto.accident.AccidentCreateDto;
+import ru.job4j.accidents.dto.accident.AccidentDto;
+import ru.job4j.accidents.dto.accident.AccidentEditDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface AccidentService {
-    AccidentDto save(AccidentCreateDto accident);
+    Optional<AccidentDto> save(AccidentCreateDto accident);
 
     Optional<AccidentDto> findById(Long id);
+
+    Optional<AccidentEditDto> findByIdOnEdit(Long id);
 
     List<AccidentDto> findAll();
 
@@ -23,5 +26,5 @@ public interface AccidentService {
 
     List<AccidentDto> findByTextPhrase(String phrase);
 
-    boolean update(AccidentDto accident);
+    boolean update(AccidentEditDto accident);
 }

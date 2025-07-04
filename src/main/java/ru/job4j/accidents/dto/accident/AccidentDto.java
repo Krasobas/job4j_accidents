@@ -1,21 +1,18 @@
-package ru.job4j.accidents.model;
+package ru.job4j.accidents.dto.accident;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-
-import static ru.job4j.accidents.utils.Utils.generateUniqueId;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Accident {
+public class AccidentDto {
     @EqualsAndHashCode.Include
-    private Long id = generateUniqueId();
-    private AccidentType type;
+    private Long id;
+    private String type;
     private String name;
     private String text;
     private String address;

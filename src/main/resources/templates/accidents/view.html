@@ -17,6 +17,9 @@
             <h2 th:text="${accident.name}">Accident Name</h2>
         </div>
         <div class="card-body">
+            <p class="card-title">
+                <span class="badge bg-primary" th:text="${accident.type}">Type</span>
+            </p>
             <p><strong>Address:</strong> <span th:text="${accident.address}">Address</span></p>
             <p><strong>Description:</strong></p>
             <p th:text="${accident.text}">Full accident description...</p>

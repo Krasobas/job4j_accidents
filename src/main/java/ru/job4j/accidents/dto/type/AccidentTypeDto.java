@@ -1,4 +1,4 @@
-package ru.job4j.accidents.dto;
+package ru.job4j.accidents.dto.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class AccidentDto {
+public class AccidentTypeDto {
     @EqualsAndHashCode.Include
     private Long id;
     private String name;
-    private String text;
-    private String address;
 }
