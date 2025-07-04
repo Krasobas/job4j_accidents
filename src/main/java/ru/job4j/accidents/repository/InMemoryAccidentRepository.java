@@ -38,7 +38,10 @@ public class InMemoryAccidentRepository implements AccidentRepository {
 
     @Override
     public Collection<Accident> findByName(String name) {
-        return store.values().stream().filter(entity -> entity.getName().equals(name)).toList();
+        return store.values().stream().filter(entity -> {
+            String current = entity.getName();
+            return Objects.nonNull(current) && current.toLowerCase().contains(name);
+        }).toList();
     }
 
     @Override

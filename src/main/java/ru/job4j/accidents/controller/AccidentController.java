@@ -9,6 +9,7 @@ import ru.job4j.accidents.dto.AccidentDto;
 import ru.job4j.accidents.service.AccidentService;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -18,8 +19,8 @@ public class AccidentController {
     private final AccidentService service;
 
     @GetMapping
-    public String getAllAccidents(Model model) {
-        Collection<AccidentDto> accidents = service.findAll();
+    public String getAllAccidents(@RequestParam(value = "name", required = false) String name, Model model) {
+        Collection<AccidentDto> accidents = Objects.nonNull(name) && !name.isBlank() ? service.findByName(name) : service.findAll();
         model.addAttribute("user", "John Smith")
              .addAttribute("accidents", accidents);
         return "accidents/list";
