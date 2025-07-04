@@ -4,7 +4,6 @@
 <head th:replace="~{fragments :: head('Home')}"></head>
 
 <body>
-    <div th:replace="~{fragments :: header('home', ${user})}"></div>
     <div class="window">
         <div class="content-card">
             <h1 class="mb-3">Accidents</h1>
@@ -26,7 +25,7 @@
                 <span class="tech-badge">Bootstrap</span>
             </div>
 
-            <a href="/posts" class="btn btn-primary">
+            <a href="/api/accidents" class="btn btn-primary">
                 <i class="bi bi-arrow-right-circle me-1"></i> Explore
             </a>
         </div>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Accidents')}"></head>
+<body>
+<div th:replace="~{fragments :: header('accidents', ${user})}"></div>
+<div class="container mt-5">
+    <h1 class="mb-4">Accidents</h1>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col" th:each="accident : ${accidents}">
+            <div class="card h-100" style="cursor: pointer;"
+                 th:onclick="|window.location.href='/api/accidents/' + '${accident.id}'|">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${accident.name}">Accident Name</h5>
+                    <p class="card-text" th:text="${accident.address}">Address</p>
+                    <p class="card-text text-muted" th:text="${#strings.abbreviate(accident.text, 50)}">Short description...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
+</body>
+</html>
