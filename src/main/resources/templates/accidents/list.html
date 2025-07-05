@@ -17,6 +17,11 @@
                     </p>
                     <p class="card-text" th:text="${accident.address}">Address</p>
                     <p class="card-text text-muted" th:text="${#strings.abbreviate(accident.text, 50)}">Short description...</p>
+                    <div class="d-flex flex-wrap gap-2">
+                        <span th:each="rule : ${accident.rules}"
+                              class="badge bg-info"
+                              th:text="${rule}">Rule</span>
+                    </div>
                 </div>
             </div>
         </div>

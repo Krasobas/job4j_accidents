@@ -8,11 +8,15 @@ import ru.job4j.accidents.dto.accident.AccidentEditDto;
 import ru.job4j.accidents.mapstruct.AccidentMapper;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
+import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.accident.AccidentRepository;
+import ru.job4j.accidents.repository.rule.RuleRepository;
 import ru.job4j.accidents.repository.type.AccidentTypeRepository;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -20,14 +24,16 @@ public class SimpleAccidentService implements AccidentService {
     private final AccidentRepository repository;
     private final AccidentMapper mapper;
     private final AccidentTypeRepository typeRepository;
+    private final RuleRepository ruleRepository;
 
     @Override
-    public Optional<AccidentDto> save(AccidentCreateDto accident) {
+    public Optional<AccidentDto> save(AccidentCreateDto accident, Set<Long> ruleIds) {
         Optional<AccidentType> type = typeRepository.findById(accident.getTypeId());
         if (type.isEmpty()) {
             return Optional.empty();
         }
-        Accident entity = mapper.getEntity(accident, type.get());
+        Set<Rule> rules = new HashSet<>(ruleRepository.findAll(ruleIds));
+        Accident entity = mapper.getEntity(accident, type.get(), rules);
         entity = repository.save(entity);
         return Optional.ofNullable(mapper.getDto(entity));
     }
@@ -85,8 +91,12 @@ public class SimpleAccidentService implements AccidentService {
     }
 
     @Override
-    public boolean update(AccidentEditDto accident) {
+    public boolean update(AccidentEditDto accident, Set<Long> ruleIds) {
         Optional<AccidentType> type = typeRepository.findById(accident.getTypeId());
-        return type.isPresent() && repository.update(mapper.getEntity(accident, type.get()));
+        if (type.isEmpty()) {
+            return false;
+        }
+        Set<Rule> rules = new HashSet<>(ruleRepository.findAll(ruleIds));
+        return type.isPresent() && repository.update(mapper.getEntity(accident, type.get(), rules));
     }
 }

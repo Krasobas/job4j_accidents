@@ -6,9 +6,10 @@ import ru.job4j.accidents.dto.accident.AccidentEditDto;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface AccidentService {
-    Optional<AccidentDto> save(AccidentCreateDto accident);
+    Optional<AccidentDto> save(AccidentCreateDto accident, Set<Long> ruleIds);
 
     Optional<AccidentDto> findById(Long id);
 
@@ -26,5 +27,5 @@ public interface AccidentService {
 
     List<AccidentDto> findByTextPhrase(String phrase);
 
-    boolean update(AccidentEditDto accident);
+    boolean update(AccidentEditDto accident, Set<Long> ruleIds);
 }

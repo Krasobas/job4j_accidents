@@ -1,22 +1,17 @@
-package ru.job4j.accidents.dto.accident;
+package ru.job4j.accidents.dto.rule;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class AccidentEditDto {
+public class RuleDto {
     @EqualsAndHashCode.Include
     private Long id;
-    private Long typeId;
+
     private String name;
-    private String text;
-    private String address;
-    private Set<Long> ruleIds;
 }

@@ -25,6 +25,14 @@
                                 th:value="${type.id}"></option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="ruleIds" class="form-label">Rules</label>
+                    <select class="form-select select2-multiple" size="3" id="ruleIds" name="ruleIds" multiple>
+                        <option th:each="rule: ${rules}"
+                                th:text="${rule.name}"
+                                th:value="${rule.id}"></option>
+                    </select>
+                </div>
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
                     <input type="text" class="form-control" id="address" name="address" required>

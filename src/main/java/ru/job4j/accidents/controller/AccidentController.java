@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.dto.accident.AccidentCreateDto;
 import ru.job4j.accidents.dto.accident.AccidentDto;
 import ru.job4j.accidents.dto.accident.AccidentEditDto;
+import ru.job4j.accidents.dto.rule.RuleDto;
 import ru.job4j.accidents.service.accident.AccidentService;
+import ru.job4j.accidents.service.rule.RuleService;
 import ru.job4j.accidents.service.type.AccidentTypeService;
 
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/api/accidents")
@@ -20,6 +23,7 @@ import java.util.Optional;
 public class AccidentController {
     private final AccidentService service;
     private final AccidentTypeService typeService;
+    private final RuleService ruleService;
 
     @GetMapping
     public String getAllAccidents(@RequestParam(value = "name", required = false) String name, Model model) {
@@ -44,7 +48,8 @@ public class AccidentController {
     @GetMapping("/create")
     public String getCreateForm(Model model) {
         model.addAttribute("user", "John Smith")
-                .addAttribute("types", typeService.findAll());
+                .addAttribute("types", typeService.findAll())
+                .addAttribute("rules", ruleService.findAll());
         return "accidents/create";
     }
 
@@ -57,13 +62,14 @@ public class AccidentController {
             return "redirect:/error/404";
         }
         model.addAttribute("accident", found.get())
-                .addAttribute("types", typeService.findAll());
+                .addAttribute("types", typeService.findAll())
+                .addAttribute("rules", ruleService.findAll());
         return "accidents/edit";
     }
 
     @PutMapping("/{id}/edit")
-    public String updateAccident(@ModelAttribute AccidentEditDto accident, Model model, @PathVariable(name = "id") Long id) {
-        if (!service.update(accident)) {
+    public String updateAccident(@ModelAttribute AccidentEditDto accident, Model model, @PathVariable(name = "id") Long id, @RequestParam(name = "ruleIds") Set<Long> ruleIds) {
+        if (!service.update(accident, ruleIds)) {
             model.addAttribute("error", "Accident not found");
             return "redirect:/error/404";
         }
@@ -71,8 +77,8 @@ public class AccidentController {
     }
 
     @PostMapping
-    public String createAccident(@ModelAttribute AccidentCreateDto accident, Model model) {
-        Optional<AccidentDto> created = service.save(accident);
+    public String createAccident(@ModelAttribute AccidentCreateDto accident, Model model, @RequestParam(name = "ruleIds") Set<Long> ruleIds) {
+        Optional<AccidentDto> created = service.save(accident, ruleIds);
         if (created.isEmpty()) {
             model.addAttribute("error", "Cannot create accident.");
             return "redirect:/error/400";
