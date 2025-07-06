@@ -7,7 +7,9 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!--    DDL     -->
+    <include file="scripts/ddl/001_ddl_create_tables.sql" relativeToChangelogFile="true"/>
 
     <!--    DML     -->
+    <include file="scripts/dml/001_dml_insert_data.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

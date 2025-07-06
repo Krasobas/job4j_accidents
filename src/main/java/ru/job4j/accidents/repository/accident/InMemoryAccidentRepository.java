@@ -1,19 +1,21 @@
 package ru.job4j.accidents.repository.accident;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Profile("ram")
 @Repository
 public class InMemoryAccidentRepository implements AccidentRepository {
     private final Map<Long, Accident> store = new ConcurrentHashMap<>();
 
     @Override
-    public Accident save(Accident accident) {
+    public Optional<Long> save(Accident accident) {
         Accident existing = store.putIfAbsent(accident.getId(), accident);
-        return Objects.isNull(existing) ? accident : existing;
+        return Objects.isNull(existing) ? Optional.of(accident.getId()) : Optional.empty();
     }
 
     @Override

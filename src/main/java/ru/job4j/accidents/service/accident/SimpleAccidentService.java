@@ -27,15 +27,14 @@ public class SimpleAccidentService implements AccidentService {
     private final RuleRepository ruleRepository;
 
     @Override
-    public Optional<AccidentDto> save(AccidentCreateDto accident, Set<Long> ruleIds) {
+    public Optional<Long> save(AccidentCreateDto accident, Set<Long> ruleIds) {
         Optional<AccidentType> type = typeRepository.findById(accident.getTypeId());
         if (type.isEmpty()) {
             return Optional.empty();
         }
         Set<Rule> rules = new HashSet<>(ruleRepository.findAll(ruleIds));
         Accident entity = mapper.getEntity(accident, type.get(), rules);
-        entity = repository.save(entity);
-        return Optional.ofNullable(mapper.getDto(entity));
+        return repository.save(entity);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ru.job4j.accidents.repository.type;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.AccidentType;
 
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Profile("ram")
 @Repository
 public class InMemoryAccidentTypeRepository implements AccidentTypeRepository {
     private final Map<Long, AccidentType> store = new ConcurrentHashMap<>(

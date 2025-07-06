@@ -78,11 +78,11 @@ public class AccidentController {
 
     @PostMapping
     public String createAccident(@ModelAttribute AccidentCreateDto accident, Model model, @RequestParam(name = "ruleIds") Set<Long> ruleIds) {
-        Optional<AccidentDto> created = service.save(accident, ruleIds);
-        if (created.isEmpty()) {
+        Optional<Long> createdId = service.save(accident, ruleIds);
+        if (createdId.isEmpty()) {
             model.addAttribute("error", "Cannot create accident.");
             return "redirect:/error/400";
         }
-        return String.format("redirect:/api/accidents/%d", created.get().getId());
+        return String.format("redirect:/api/accidents/%d", createdId.get());
     }
 }

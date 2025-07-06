@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface AccidentService {
-    Optional<AccidentDto> save(AccidentCreateDto accident, Set<Long> ruleIds);
+    Optional<Long> save(AccidentCreateDto accident, Set<Long> ruleIds);
 
     Optional<AccidentDto> findById(Long id);
 

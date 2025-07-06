@@ -1,16 +1,17 @@
 package ru.job4j.accidents.repository.rule;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Rule;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
+@Profile("ram")
 @Repository
 public class InMemoryRuleRepository implements RuleRepository {
     private final Map<Long, Rule> store = new ConcurrentHashMap<>(

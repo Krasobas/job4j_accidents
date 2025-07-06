@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface AccidentRepository {
-    Accident save(Accident accident);
+    Optional<Long> save(Accident accident);
 
     Optional<Accident> findById(Long id);
 
