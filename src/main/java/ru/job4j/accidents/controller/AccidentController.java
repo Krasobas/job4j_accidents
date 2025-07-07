@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.dto.accident.AccidentCreateDto;
 import ru.job4j.accidents.dto.accident.AccidentDto;
 import ru.job4j.accidents.dto.accident.AccidentEditDto;
-import ru.job4j.accidents.dto.rule.RuleDto;
 import ru.job4j.accidents.service.accident.AccidentService;
 import ru.job4j.accidents.service.rule.RuleService;
 import ru.job4j.accidents.service.type.AccidentTypeService;
@@ -28,14 +27,12 @@ public class AccidentController {
     @GetMapping
     public String getAllAccidents(@RequestParam(value = "name", required = false) String name, Model model) {
         Collection<AccidentDto> accidents = Objects.nonNull(name) && !name.isBlank() ? service.findByName(name) : service.findAll();
-        model.addAttribute("user", "John Smith")
-             .addAttribute("accidents", accidents);
+        model.addAttribute("accidents", accidents);
         return "accidents/list";
     }
 
     @GetMapping("/{id}")
     public String getAccidentById(Model model, @PathVariable(name = "id") Long id) {
-        model.addAttribute("user", "John Smith");
         Optional<AccidentDto> found = service.findById(id);
         if (found.isEmpty()) {
             model.addAttribute("error", "Accident not found");
@@ -47,15 +44,13 @@ public class AccidentController {
 
     @GetMapping("/create")
     public String getCreateForm(Model model) {
-        model.addAttribute("user", "John Smith")
-                .addAttribute("types", typeService.findAll())
+        model.addAttribute("types", typeService.findAll())
                 .addAttribute("rules", ruleService.findAll());
         return "accidents/create";
     }
 
     @GetMapping("/{id}/edit")
     public String getEditForm(Model model, @PathVariable(name = "id") Long id) {
-        model.addAttribute("user", "John Smith");
         Optional<AccidentEditDto> found = service.findByIdOnEdit(id);
         if (found.isEmpty()) {
             model.addAttribute("error", "Accident not found");
