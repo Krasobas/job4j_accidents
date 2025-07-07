@@ -1,26 +1,16 @@
 package ru.job4j.accidents.repository.accident;
 
+import org.springframework.data.repository.CrudRepository;
 import ru.job4j.accidents.model.Accident;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.List;
 
-public interface AccidentRepository {
-    Optional<Long> save(Accident accident);
+public interface AccidentRepository extends CrudRepository<Accident, Long> {
 
-    Optional<Accident> findById(Long id);
+    List<Accident> findByNameContainingIgnoreCase(String name);
 
-    Collection<Accident> findAll();
+    List<Accident> findByAddress(String address);
 
-    void deleteById(Long id);
+    List<Accident> findByTextContainingIgnoreCase(String text);
 
-    boolean existsById(Long id);
-
-    Collection<Accident> findByName(String name);
-
-    Collection<Accident> findByAddress(String address);
-
-    Collection<Accident> findByTextPhrase(String phrase);
-
-    boolean update(Accident accident);
 }

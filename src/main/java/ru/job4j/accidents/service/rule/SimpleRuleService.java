@@ -8,6 +8,7 @@ import ru.job4j.accidents.repository.rule.RuleRepository;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class SimpleRuleService implements RuleService {
 
     @Override
     public Collection<RuleDto> findAll() {
-        return repository.findAll().stream().map(mapper::getDto).toList();
+        return StreamSupport.stream(repository.findAll().spliterator(), false).map(mapper::getDto).toList();
     }
 
     @Override

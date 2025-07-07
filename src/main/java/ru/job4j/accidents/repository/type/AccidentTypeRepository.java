@@ -1,12 +1,10 @@
 package ru.job4j.accidents.repository.type;
 
+import org.springframework.data.repository.CrudRepository;
+import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.List;
 
-public interface  AccidentTypeRepository {
-    Collection<AccidentType> findAll();
-
-    Optional<AccidentType> findById(Long id);
+public interface  AccidentTypeRepository extends CrudRepository<AccidentType, Long> {
 }
