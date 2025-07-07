@@ -7,6 +7,8 @@ import ru.job4j.accidents.model.Accident;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static ru.job4j.accidents.utils.Utils.generateUniqueId;
+
 @Profile("ram")
 @Repository
 public class InMemoryAccidentRepository implements AccidentRepository {
@@ -14,6 +16,7 @@ public class InMemoryAccidentRepository implements AccidentRepository {
 
     @Override
     public Optional<Long> save(Accident accident) {
+        accident.setId(generateUniqueId());
         Accident existing = store.putIfAbsent(accident.getId(), accident);
         return Objects.isNull(existing) ? Optional.of(accident.getId()) : Optional.empty();
     }

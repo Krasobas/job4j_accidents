@@ -1,18 +1,22 @@
 package ru.job4j.accidents.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import static ru.job4j.accidents.utils.Utils.generateUniqueId;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@Table(name = "accident_type")
 public class AccidentType {
     @EqualsAndHashCode.Include
-    private Long id = generateUniqueId();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
 }
