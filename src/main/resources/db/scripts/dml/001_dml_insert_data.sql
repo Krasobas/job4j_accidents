@@ -1,3 +1,9 @@
+insert into role (name)
+values
+    ('admin'),
+    ('user')
+;
+
 insert into accident_type (name)
 values
     ('Speeding'),
@@ -23,20 +29,6 @@ values
     ('Parking on the lawn', 'Car parked on a restricted grassy area', '456 Oak Ave', 3),
     ('Pedestrian accident', 'Car hit a pedestrian in a no-crossing zone', '789 Pine Blvd', 4)
 ;
-
-create table if not exists accident (
-    id serial primary key,
-    name varchar not null,
-    text text,
-    address varchar,
-    type_id bigint not null references accident_type(id)
-);
-
-create table if not exists accident_rule(
-    accident_id bigint not null references accident(id),
-    rule_id bigint not null references rule(id),
-    primary key (accident_id, rule_id)
-);
 
 insert into accident_rule (accident_id, rule_id)
 values
