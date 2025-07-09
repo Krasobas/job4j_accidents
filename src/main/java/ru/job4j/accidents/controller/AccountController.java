@@ -29,7 +29,7 @@ public class AccountController {
     public String register(@ModelAttribute AccountCreateDto user, Model model) {
         if (service.save(user).isEmpty()) {
             model.addAttribute("error", "User with this email already exists");
-            return "/users/register";
+            return "/security/register";
         }
         return "redirect:/login";
     }
